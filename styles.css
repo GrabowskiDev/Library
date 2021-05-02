@@ -1,0 +1,25 @@
+:root {
+    --background: #FBC490;
+    --foreground: #F67B50;
+    --accent: #A82810;
+    --complementary: #FBAA60;
+}
+
+body {
+    margin: 0px;
+    font-family: 'Open Sans';
+    background-color: var(--background);
+}
+
+.topbar {
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+    
+    background-color: var(--accent);
+}
+
+.topbar h1 {
+    margin: 0px 10px;
+    color: var(--complementary);
+}

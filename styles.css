@@ -29,7 +29,7 @@ body {
 
 /* Styling all books */
 
-.bookList {
+.booksList {
     margin: 16px;
     display: grid;
     column-gap: 16px;

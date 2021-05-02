@@ -1,3 +1,4 @@
+/* Declaring color pallete */
 :root {
     --background: #FBC490;
     --foreground: #F67B50;
@@ -11,6 +12,8 @@ body {
     background-color: var(--background);
 }
 
+
+
 .topbar {
     height: 50px;
     margin: 0px;
@@ -22,4 +25,40 @@ body {
 .topbar h1 {
     margin: 0px 10px;
     color: var(--complementary);
+}
+
+/* Styling all books */
+
+.bookList {
+    margin: 16px;
+}
+
+.book {
+    width: 250px;
+    height: 300px;
+    padding-top: 10px;
+    background-color: var(--foreground);
+    border: 2px solid var(--accent)
+}
+
+.book * {
+    text-align: center;
+}
+
+.inline {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 15px;
+}
+
+.inline * {
+    margin: 0;
+}
+
+.book button {
+    width: 100px;
+    height: 25px;
+    background-color: var(--accent);
+    color: var(--complementary);
+    border: 2px solid var(--complementary);
 }

@@ -67,7 +67,8 @@ body {
 }
 
 .inline * {
-    margin: 0;
+    margin: 0
+    !important;
 }
 
 .book button {
@@ -94,8 +95,28 @@ body {
 
 .inputForm *{
     text-align: center;
+    margin: 10px;
+}
+
+.inputForm input {
+    display: block;
+    margin: auto;
+}
+
+.inputForm button {
+    display: block;
+    margin: auto;
 }
 
 .hidden {
     display: none;
+}
+
+#closeButton {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    
+    border: none;
+    background-color: var(--complementary);
 }

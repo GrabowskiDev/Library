@@ -1,18 +1,5 @@
 //Declaring user library
-let myLibrary = [
-	{
-		title: "Pan Tadeusz",
-		author: "Adam Mickiewicz",
-		pages: 231,
-		read: false
-	},
-	{
-		title: "Quo Vadis",
-		author: "Henryk Sienkiewicz",
-		pages: 118,
-		read: true
-	}
-]
+let myLibrary = []
 
 //Template for book
 function book(title, author, pages, read) {

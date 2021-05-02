@@ -18,6 +18,9 @@ body {
     height: 50px;
     margin: 0px;
     padding: 0px;
+
+    display: flex;
+    justify-content: space-between;
     
     background-color: var(--accent);
 }
@@ -27,6 +30,13 @@ body {
     color: var(--complementary);
 }
 
+.topbar button {
+    margin: auto 5px;
+    height: 80%;
+    font-size: 20px;
+    background-color: var(--complementary);
+    border: 2px solid var(--foreground);
+}
 /* Styling all books */
 
 .booksList {

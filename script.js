@@ -34,12 +34,13 @@ function book(title, author, pages, read) {
 }
 
 function newBook() {
-	let title;
-	let author;
-	let pages;
-	let read;
+	let title = prompt("Give title");
+	let author = prompt("Give author");
+	let pages = prompt("How many pages");
+	let read = prompt("Is read?");
 
-	myLibrary.push(newBook(title,author,pages,read))
+	myLibrary.push(new book(title,author,pages,read));
+	printAllBooks();
 }
 
 function printBook(book) {
@@ -62,8 +63,9 @@ function printBook(book) {
 
 	read.classList.add('inline');
 	read.innerHTML = "<p>Has been read?</p>";
-	if(book.read) readButton.textContent="Yes";
-	if(!book.read) readButton.textContent="No";
+	if(book.read=="true"){
+		readButton.textContent="Yes";
+	} else readButton.textContent="No";
 	read.appendChild(readButton);
 
 	buttons.classList.add('inline');

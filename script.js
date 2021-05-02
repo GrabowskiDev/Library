@@ -34,11 +34,6 @@ function book(title, author, pages, read) {
 }
 
 function newBook() {
-	let title = prompt("Give title");
-	let author = prompt("Give author");
-	let pages = prompt("How many pages");
-	let read = prompt("Is read?");
-
 	myLibrary.push(new book(title,author,pages,read));
 	printAllBooks();
 }

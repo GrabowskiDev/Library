@@ -77,3 +77,25 @@ body {
     color: var(--complementary);
     border: 2px solid var(--complementary);
 }
+
+/* Form styling */
+.inputForm{
+    width: 250px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: var(--accent);
+    color: var(--complementary);
+
+    padding-bottom: 20px;
+}
+
+.inputForm *{
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}

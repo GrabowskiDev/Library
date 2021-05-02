@@ -10,7 +10,7 @@
 <body>
     <div class="topbar">
         <h1>Library</h1>
-        <button onclick="newBook()">Add a Book</button>
+        <button onclick="openForm()">Add a Book</button>
     </div>
     <div class="booksList">
         <div class="book">
@@ -36,7 +36,8 @@
             </div>
         </div>
     </div>
-    <div class="inputForm">
+    <div class="inputForm hidden">
+        <button class="closeButton" onclick="closeForm()">x</button>
         <h1>Add a book</h1>
         <p>Book title:</p>
         <input type="text" id="bookTitle">

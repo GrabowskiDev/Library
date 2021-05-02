@@ -77,7 +77,7 @@ function printBook(book) {
 	bookDiv.appendChild(pages);
 	bookDiv.appendChild(read);
 	bookDiv.appendChild(buttons);
-	
+
 	booksList.appendChild(bookDiv);
 }
 
@@ -89,5 +89,14 @@ function printAllBooks() {
 	});
 }
 
+//Will add and remove hidden class to form
+function closeForm() {
+	form.classList.add("hidden");
+}
+function openForm() {
+	form.classList.remove("hidden");
+}
+
 //Query selectors
 const booksList = document.querySelector('.booksList');
+const form = document.querySelector('.inputForm');

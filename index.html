@@ -37,20 +37,18 @@
         </div>
     </div>
     <div class="inputForm">
-       <form>
-           <h1>Add a book</h1>
-           <p>Book title:</p>
-           <input type="text" required>
-           <p>Book author:</p>
-           <input type="text" required>
-           <p>Number of pages:</p>
-           <input type="number" required>
-           <div class="inline">
-               <p>Has been read?</p>
-               <input type="checkbox">
-           </div>
-           <button type="submit">Submit</button>
-       </form> 
+        <h1>Add a book</h1>
+        <p>Book title:</p>
+        <input type="text" id="bookTitle">
+        <p>Book author:</p>
+        <input type="text" id="bookAuthor">
+        <p>Number of pages:</p>
+        <input type="number" id="numberOfPages">
+        <div class="inline">
+            <p>Has been read?</p>
+            <input type="checkbox" id="isRead">
+        </div>
+        <button onclick="newBook()">Submit</button>
     </div>
 </body>
 <script src="script.js"></script>

@@ -34,7 +34,12 @@ function book(title, author, pages, read) {
 }
 
 function newBook() {
-	myLibrary.push(new book(title,author,pages,read));
+	const title = document.querySelector('#bookTitle');
+	const author = document.querySelector('#bookAuthor');
+	const pages = document.querySelector('#numberOfPages');
+	const read = document.querySelector('#isRead');
+
+	myLibrary.push(new book(title.value,author.value,pages.value,read.checked));
 	printAllBooks();
 }
 
@@ -58,7 +63,7 @@ function printBook(book) {
 
 	read.classList.add('inline');
 	read.innerHTML = "<p>Has been read?</p>";
-	if(book.read=="true"){
+	if(book.read){
 		readButton.textContent="Yes";
 	} else readButton.textContent="No";
 	read.appendChild(readButton);

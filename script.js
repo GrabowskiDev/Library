@@ -81,6 +81,8 @@ function printAllBooks() {
 	myLibrary.forEach(book => {
 		printBook(book);
 	});
+
+	populateStorage();
 }
 
 //Will add and remove hidden class to form
@@ -120,13 +122,13 @@ function modifyBook(btn) {
 }
 
 function populateStorage() {
-	localStorage.setItem('library', myLibrary);
+	localStorage.setItem('library', JSON.stringify(myLibrary));
   
 	setLibrary();
 }
 
 function setLibrary() {
-	myLibrary = localStorage.getItem('library');
+	myLibrary = JSON.parse(localStorage.getItem('library'));
 }
 
 //Query selectors
@@ -140,3 +142,9 @@ const read = document.querySelector('#isRead');
 
 //Global variables
 let isModified = "no";
+
+//On page load
+if(localStorage.getItem('library')) {
+	setLibrary();
+	printAllBooks();
+}

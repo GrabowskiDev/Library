@@ -21,11 +21,7 @@ function book(title, author, pages, read) {
 }
 
 function newBook() {
-	const title = document.querySelector('#bookTitle');
-	const author = document.querySelector('#bookAuthor');
-	const pages = document.querySelector('#numberOfPages');
-	const read = document.querySelector('#isRead');
-
+	
 	if(isModified!="no") {
 		myLibrary[isModified].title = title.value;
 		myLibrary[isModified].author = author.value;
@@ -94,6 +90,17 @@ function closeForm() {
 }
 function openForm() {
 	form.classList.remove("hidden");
+	if(isModified!="no") {
+		title.value = myLibrary[isModified].title;
+		author.value = myLibrary[isModified].author;
+		pages.value = myLibrary[isModified].pages;
+		read.checked = myLibrary[isModified].read;
+	} else {
+		title.value = "";
+		author.value = "";
+		pages.value = "";
+		read.checked = false;
+	}
 }
 
 function changeStatus(btn) {
@@ -115,6 +122,11 @@ function modifyBook(btn) {
 //Query selectors
 const booksList = document.querySelector('.booksList');
 const form = document.querySelector('.inputForm');
+
+const title = document.querySelector('#bookTitle');
+const author = document.querySelector('#bookAuthor');
+const pages = document.querySelector('#numberOfPages');
+const read = document.querySelector('#isRead');
 
 //Global variables
 let isModified = "no";

@@ -130,3 +130,5 @@ const read = document.querySelector('#isRead');
 
 //Global variables
 let isModified = "no";
+
+console.log(firebase);

@@ -59,7 +59,7 @@ function printBook(book) {
 	read.appendChild(readButton);
 
 	buttons.classList.add('inline');
-	buttons.innerHTML = "<button>Modify</button><button>Delete</button>"
+	buttons.innerHTML = `<button id="${myLibrary.indexOf(book)}" onclick="modifyBook(this)">Modify</button><button id="${myLibrary.indexOf(book)}" onclick="deleteBook(this)">Delete</button>`
 
 	//Appending everything
 	bookDiv.appendChild(title);
@@ -90,6 +90,11 @@ function openForm() {
 function changeStatus(btn) {
 	if (myLibrary[btn.id].read==true) myLibrary[btn.id].read = false;
 	else if (myLibrary[btn.id].read==false) myLibrary[btn.id].read = true;
+	printAllBooks();
+}
+
+function deleteBook(btn) {
+	myLibrary.splice(btn.id, 1);
 	printAllBooks();
 }
 

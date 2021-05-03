@@ -26,7 +26,15 @@ function newBook() {
 	const pages = document.querySelector('#numberOfPages');
 	const read = document.querySelector('#isRead');
 
-	myLibrary.push(new book(title.value,author.value,pages.value,read.checked));
+	if(isModified!="no") {
+		myLibrary[isModified].title = title.value;
+		myLibrary[isModified].author = author.value;
+		myLibrary[isModified].pages = pages.value;
+		myLibrary[isModified].read = read.checked;
+	} else {
+		myLibrary.push(new book(title.value,author.value,pages.value,read.checked));
+	}
+
 	printAllBooks();
 	closeForm();
 }
@@ -82,6 +90,7 @@ function printAllBooks() {
 //Will add and remove hidden class to form
 function closeForm() {
 	form.classList.add("hidden");
+	isModified = "no";
 }
 function openForm() {
 	form.classList.remove("hidden");
@@ -98,6 +107,14 @@ function deleteBook(btn) {
 	printAllBooks();
 }
 
+function modifyBook(btn) {
+	isModified = btn.id;
+	openForm();
+}
+
 //Query selectors
 const booksList = document.querySelector('.booksList');
 const form = document.querySelector('.inputForm');
+
+//Global variables
+let isModified = "no";

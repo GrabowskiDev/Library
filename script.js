@@ -28,6 +28,7 @@ function newBook() {
 
 	myLibrary.push(new book(title.value,author.value,pages.value,read.checked));
 	printAllBooks();
+	closeForm();
 }
 
 function printBook(book) {
@@ -53,6 +54,8 @@ function printBook(book) {
 	if(book.read){
 		readButton.textContent="Yes";
 	} else readButton.textContent="No";
+	readButton.id = myLibrary.indexOf(book);
+	readButton.onclick = function() { changeStatus(this); };
 	read.appendChild(readButton);
 
 	buttons.classList.add('inline');
@@ -82,6 +85,12 @@ function closeForm() {
 }
 function openForm() {
 	form.classList.remove("hidden");
+}
+
+function changeStatus(btn) {
+	if (myLibrary[btn.id].read==true) myLibrary[btn.id].read = false;
+	else if (myLibrary[btn.id].read==false) myLibrary[btn.id].read = true;
+	printAllBooks();
 }
 
 //Query selectors

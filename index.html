@@ -10,7 +10,11 @@
 <body>
     <div class="topbar">
         <h1>Library</h1>
-        <button onclick="openForm()">Add a Book</button>
+        <div class="wrapper">
+            <button onclick="openForm()">Add a Book</button>
+            <button id="signInBtn">Sign in with Google</button>
+            <button id="signOutBtn" hidden="true">Sign Out</button>
+        </div>
     </div>
     <div class="booksList"></div>
     <div class="inputForm hidden">

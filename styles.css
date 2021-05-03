@@ -12,7 +12,10 @@ body {
     background-color: var(--background);
 }
 
-
+.wrapper {
+    width: 334px;
+    margin: 8px 0px 8px 0px;
+}
 
 .topbar {
     height: 50px;
@@ -32,7 +35,7 @@ body {
 
 .topbar button {
     margin: auto 5px;
-    height: 80%;
+    height: 100%;
     font-size: 20px;
     background-color: var(--complementary);
     border: 2px solid var(--foreground);

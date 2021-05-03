@@ -119,6 +119,16 @@ function modifyBook(btn) {
 	openForm();
 }
 
+function populateStorage() {
+	localStorage.setItem('library', myLibrary);
+  
+	setLibrary();
+}
+
+function setLibrary() {
+	myLibrary = localStorage.getItem('library');
+}
+
 //Query selectors
 const booksList = document.querySelector('.booksList');
 const form = document.querySelector('.inputForm');

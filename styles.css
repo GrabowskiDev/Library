@@ -123,3 +123,8 @@ body {
     border: none;
     background-color: var(--complementary);
 }
+
+#signOutBtn {
+    padding-left: 17%;
+    padding-right: 16%;
+}

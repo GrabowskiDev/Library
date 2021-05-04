@@ -146,39 +146,58 @@ const read = document.querySelector('#isRead');
 //Global variables
 let isModified = "no";
 
-/* FIRESTORE DATABASE */
+/*  !!!!!!!!!!!!!FIRESTORE DATABASE!!!!!!!!!!!!!!!!! */
 const db = firebase.firestore();
 let libraryRef = db.collection('Libraries');
 
 function addToFirestore() {
+	//Checking if user is logged in
 	auth.onAuthStateChanged(user => {
+		//Set the same document for each book
 		myLibrary.forEach((book) => {
+			//Converting object into array
 			let arrayBook = Object.values(book);
+			//Set document for each user
 			libraryRef.doc(user.uid).set({
 				uid: user.uid,
 				length: myLibrary.length,
+				//Add current book to document
 				[`book${myLibrary.indexOf(book)}`]: arrayBook,
-			}, { merge: true });
+			});
 		});
 	});
 }
 
 function getFromFirestore() {
+	//Checking if user is logged in
 	auth.onAuthStateChanged(user => {
+		//Get user's document
 		libraryRef.doc(user.uid).get().then((doc) => {
+			//Need to make sure the doc exists
 			if(doc.exists) {
+				//Clearing current library
+				myLibrary = [];
+				//Get number of books in the document
 				let length = doc.data().length;
-				console.log("length: "+length);
+				//For each book in the document
 				for(i=0; i<length; i++) {	
+					//Get that book array
 					let oldBook = doc.data()[`book${i}`];
+					//Create new book object
 					let newBook = {};
+
+					//Set newBook obj values to oldBook values
 					newBook.title = oldBook[0];
 					newBook.author = oldBook[1];
 					newBook.pages = oldBook[2];
 					newBook.read = oldBook[3];
+					//Push new book to myLibrary
 					myLibrary.push(newBook);
 				}
-			}
+			} else {
+     	    	//Alert user when there is no document 
+        		alert("No library in the cloud! It will be automatically created after adding first book!");
+    		}
 		});
 	});
 }

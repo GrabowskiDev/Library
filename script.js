@@ -135,6 +135,16 @@ function modifyBook(btn) {
 	openForm();
 }
 
+function populateStorage() {
+	localStorage.setItem('library', JSON.stringify(myLibrary));
+  
+	setLibrary();
+}
+
+function setLibrary() {
+	myLibrary = JSON.parse(localStorage.getItem('library'));
+}
+
 //Query selectors
 const booksList = document.querySelector('.booksList');
 const form = document.querySelector('.inputForm');
@@ -207,4 +217,9 @@ function getFromFirestore() {
     		}
 		});
 	});
+}
+//On page load
+if(localStorage.getItem('library')) {
+	setLibrary();
+	printAllBooks();
 }

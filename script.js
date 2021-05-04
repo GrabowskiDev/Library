@@ -156,8 +156,29 @@ function addToFirestore() {
 			let arrayBook = Object.values(book);
 			libraryRef.doc(user.uid).set({
 				uid: user.uid,
+				length: myLibrary.length,
 				[`book${myLibrary.indexOf(book)}`]: arrayBook,
 			}, { merge: true });
+		});
+	});
+}
+
+function getFromFirestore() {
+	auth.onAuthStateChanged(user => {
+		libraryRef.doc(user.uid).get().then((doc) => {
+			if(doc.exists) {
+				let length = doc.data().length;
+				console.log("length: "+length);
+				for(i=0; i<length; i++) {	
+					let oldBook = doc.data()[`book${i}`];
+					let newBook = {};
+					newBook.title = oldBook[0];
+					newBook.author = oldBook[1];
+					newBook.pages = oldBook[2];
+					newBook.read = oldBook[3];
+					myLibrary.push(newBook);
+				}
+			}
 		});
 	});
 }

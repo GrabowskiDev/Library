@@ -154,6 +154,11 @@ let libraryRef = db.collection('Libraries');
 function addToFirestore() {
 	//Checking if user is logged in
 	auth.onAuthStateChanged(user => {
+		//Removing length (for some reasons it wouldn't be set to 0 when no books are in myLibrary)
+		libraryRef.doc(user.uid).update({
+			length: firebase.firestore.FieldValue.delete()
+		});
+
 		//Set the same document for each book
 		myLibrary.forEach((book) => {
 			//Converting object into array

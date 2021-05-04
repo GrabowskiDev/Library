@@ -15,6 +15,7 @@ auth.onAuthStateChanged(user => {
         // signed in
         signInBtn.hidden = true;
         signOutBtn.hidden = false;
+		setTimeout(getFromFirestore(), 5000);
     } else {
         // not signed in
         signInBtn.hidden = false;
@@ -95,7 +96,7 @@ function printAllBooks() {
 	myLibrary.forEach(book => {
 		printBook(book);
 	});
-	//addToFirestore();
+	addToFirestore();
 }
 
 //Will add and remove hidden class to form
@@ -163,7 +164,7 @@ function addToFirestore() {
 				length: myLibrary.length,
 				//Add current book to document
 				[`book${myLibrary.indexOf(book)}`]: arrayBook,
-			});
+			}, { merge:true });
 		});
 	});
 }
@@ -194,6 +195,7 @@ function getFromFirestore() {
 					//Push new book to myLibrary
 					myLibrary.push(newBook);
 				}
+				setTimeout(printAllBooks(), 5000);
 			} else {
      	    	//Alert user when there is no document 
         		alert("No library in the cloud! It will be automatically created after adding first book!");

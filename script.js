@@ -1,3 +1,6 @@
+//Declaring user library
+let myLibrary = []
+
 /* FIREBASE AUTHENTICATION */
 const auth = firebase.auth();
 
@@ -15,17 +18,19 @@ auth.onAuthStateChanged(user => {
         // signed in
         signInBtn.hidden = true;
         signOutBtn.hidden = false;
+		myLibrary = [];
 		setTimeout(getFromFirestore(), 5000);
     } else {
         // not signed in
         signInBtn.hidden = false;
         signOutBtn.hidden = true;
+		myLibrary = [];
+		setLibrary();
+		printAllBooks();
     }
 });
 
 
-//Declaring user library
-let myLibrary = []
 
 //Template for book
 function book(title, author, pages, read) {
@@ -96,7 +101,7 @@ function printAllBooks() {
 	myLibrary.forEach(book => {
 		printBook(book);
 	});
-	addToFirestore();
+	populateStorage();
 }
 
 //Will add and remove hidden class to form
@@ -136,9 +141,11 @@ function modifyBook(btn) {
 }
 
 function populateStorage() {
-	localStorage.setItem('library', JSON.stringify(myLibrary));
-  
-	setLibrary();
+	if(signInBtn.hidden) {
+		addToFirestore();
+	} else if(signOutBtn.hidden) {
+		localStorage.setItem('library', JSON.stringify(myLibrary));
+	}
 }
 
 function setLibrary() {
@@ -217,9 +224,4 @@ function getFromFirestore() {
     		}
 		});
 	});
-}
-//On page load
-if(localStorage.getItem('library')) {
-	setLibrary();
-	printAllBooks();
 }

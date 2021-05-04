@@ -6,7 +6,7 @@ const signOutBtn = document.getElementById('signOutBtn');
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
-/// Sign in event handlers
+	// Sign in event handlers
 signInBtn.onclick = () => auth.signInWithPopup(provider);
 signOutBtn.onclick = () => auth.signOut();
 
@@ -32,17 +32,6 @@ function book(title, author, pages, read) {
 	this.author = author;
 	this.pages = pages;
 	this.read = read;
-	
-	this.info = function() {
-		let readText;
-		if(read==true) {
-			readText = "has been read";
-		}
-		else{
-			readText = "not read yet";
-		}
-		return `${title} by ${author}, ${pages} pages, ${readText}.`;
-	}
 }
 
 function newBook() {
@@ -106,6 +95,7 @@ function printAllBooks() {
 	myLibrary.forEach(book => {
 		printBook(book);
 	});
+	//addToFirestore();
 }
 
 //Will add and remove hidden class to form
@@ -156,4 +146,18 @@ const read = document.querySelector('#isRead');
 //Global variables
 let isModified = "no";
 
-console.log(firebase);
+/* FIRESTORE DATABASE */
+const db = firebase.firestore();
+let libraryRef = db.collection('Libraries');
+
+function addToFirestore() {
+	auth.onAuthStateChanged(user => {
+		myLibrary.forEach((book) => {
+			let arrayBook = Object.values(book);
+			libraryRef.doc(user.uid).set({
+				uid: user.uid,
+				[`book${myLibrary.indexOf(book)}`]: arrayBook,
+			}, { merge: true });
+		});
+	});
+}

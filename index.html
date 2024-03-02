@@ -1,60 +1,105 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> 
-</head>
-<body>
-    <div class="topbar">
-        <h1>Library</h1>
-        <div class="wrapper">
-            <button onclick="openForm()">Add a Book</button>
-            <button id="signInBtn">Sign in with Google</button>
-            <button id="signOutBtn" hidden="true">Sign Out</button>
-        </div>
-    </div>
-    <div class="booksList"></div>
-    <div class="inputForm hidden">
-        <button id="closeButton" onclick="closeForm()">x</button>
-        <h1>Add a book</h1>
-        <p>Book title:</p>
-        <input type="text" id="bookTitle">
-        <p>Book author:</p>
-        <input type="text" id="bookAuthor">
-        <p>Number of pages:</p>
-        <input type="number" id="numberOfPages">
-        <div class="inline">
-            <p>Has been read?</p>
-            <input type="checkbox" id="isRead">
-        </div>
-        <button onclick="newBook()">Submit</button>
-    </div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Library</title>
+		<link rel="stylesheet" href="styles.css" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<div class="topbar">
+			<h1>Library</h1>
+			<div class="wrapper">
+				<button class="btn" onclick="openForm()">Add a Book</button>
+				<!-- <button class="btn" id="signInBtn">Sign in with Google</button>
+				<button class="btn" id="signOutBtn" hidden="true">
+					Sign Out
+				</button> -->
+			</div>
+		</div>
+		<div class="booksList"></div>
+		<div class="inputForm hidden">
+			<button id="closeButton" onclick="closeForm()">x</button>
+			<h1>Add a book</h1>
+			<p>Book title:</p>
+			<input type="text" id="bookTitle" />
+			<p>Book author:</p>
+			<input type="text" id="bookAuthor" />
+			<p>Number of pages:</p>
+			<input type="number" id="numberOfPages" />
+			<div class="inline">
+				<p>Has been read?</p>
+				<input type="checkbox" id="isRead" />
+			</div>
+			<button class="btn" onclick="newBook()">Submit</button>
+		</div>
 
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-firestore.js"></script>
+		<!-- Popup for storage type -->
+		<div class="popup visible">
+			<h2 class="popup-title">Choose your storage type</h2>
+			<a class="btn--popup" href="#">
+				<div class="btn--popup-title">
+					<ion-icon
+						name="folder-open-outline"
+						class="icon"
+					></ion-icon>
+					<h3>Local Storage</h3>
+				</div>
+				<p>
+					All added books will be stored locally. They will be visible
+					only on this device and on this browser.
+				</p>
+			</a>
+			<a class="btn--popup" href="#">
+				<div class="btn--popup-title">
+					<ion-icon
+						name="cloud-upload-outline"
+						class="icon"
+					></ion-icon>
+					<h3>Cloud Storage</h3>
+				</div>
+				<p>
+					All added books will be stored in the cloud. They will be
+					visible on every device with the google account.
+				</p>
+			</a>
+		</div>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
+		<!-- The core Firebase JS SDK is always required and must be listed first -->
+		<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-firestore.js"></script>
+
+		<!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyCBKuwQ_JJP8W7iPYIcRhk-wtoX0aDZCMA",
-    authDomain: "library-grabowskidev.firebaseapp.com",
-    projectId: "library-grabowskidev",
-    storageBucket: "library-grabowskidev.appspot.com",
-    messagingSenderId: "599794421355",
-    appId: "1:599794421355:web:e288b71cac32d966e62b2e"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-</script>
-</body>
-<script src="script.js"></script>
+		<script>
+			// Your web app's Firebase configuration
+			var firebaseConfig = {
+				apiKey: 'AIzaSyCBKuwQ_JJP8W7iPYIcRhk-wtoX0aDZCMA',
+				authDomain: 'library-grabowskidev.firebaseapp.com',
+				projectId: 'library-grabowskidev',
+				storageBucket: 'library-grabowskidev.appspot.com',
+				messagingSenderId: '599794421355',
+				appId: '1:599794421355:web:e288b71cac32d966e62b2e',
+			};
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
+		</script>
+
+		<script
+			type="module"
+			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+		></script>
+		<script
+			nomodule
+			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+		></script>
+	</body>
+	<script src="script.js"></script>
 </html>

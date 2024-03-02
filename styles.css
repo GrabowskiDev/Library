@@ -1,138 +1,187 @@
 /* Declaring color pallete */
 :root {
-    --background: #FBC490;
-    --foreground: #F67B50;
-    --accent: #A82810;
-    --complementary: #FBAA60;
+	--background: #fbc490;
+	--foreground: #f67b50;
+	--accent: #a82810;
+	--complementary: #fbaa60;
 }
 
 body {
-    margin: 0px;
-    font-family: 'Open Sans';
-    background-color: var(--background);
+	margin: 0px;
+	font-family: 'Open Sans';
+	background-color: var(--background);
 }
 
 .wrapper {
-    margin: 8px 0px 8px 0px;
-    width: 2fr;
+	margin: 8px 0px 8px 0px;
+	width: 2fr;
 }
 
 .topbar {
-    height: 50px;
-    margin: 0px;
-    padding: 0px;
+	height: 50px;
+	margin: 0px;
+	padding: 0px;
 
-    display: flex;
-    justify-content: space-between;
-    
-    background-color: var(--accent);
+	display: flex;
+	justify-content: space-between;
+
+	background-color: var(--accent);
 }
 
 .topbar h1 {
-    margin: 0px 10px;
-    color: var(--complementary);
-    width: 1fr;
+	margin: 0px 10px;
+	color: var(--complementary);
+	width: 1fr;
 }
 
-.topbar button {
-    margin: auto 5px;
-    height: 100%;
-    background-color: var(--complementary);
-    border: 2px solid var(--foreground);
+.btn {
+	margin: auto 5px;
+	height: 100%;
+	background-color: var(--complementary);
+	border: 2px solid var(--foreground);
+}
+
+.popup {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 30vw;
+
+	background-color: var(--complementary);
+	border: 6px solid var(--accent);
+	border-radius: 12px;
+	padding: 32px;
+	box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.3);
+
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 3fr;
+	gap: 16px;
+}
+
+.popup-title {
+	grid-column: span 2;
+	text-align: center;
+}
+
+.btn--popup {
+	border: 3px solid var(--accent);
+	border-radius: 12px;
+	padding: 12px;
+	text-decoration: none;
+	color: black;
+	transition: 0.3s;
+}
+
+.btn--popup:hover {
+	background-color: var(--accent);
+	color: var(--background);
+}
+
+.btn--popup-title {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	height: 50px;
+}
+
+.icon {
+	width: 32px;
+	height: 32px;
 }
 
 /* Styling all books */
 
 .booksList {
-    margin: 16px;
-    display: grid;
-    column-gap: 16px;
-    row-gap: 16px;
-    grid-template-columns: repeat(auto-fill, 250px);
-    justify-content: center;
+	margin: 16px;
+	display: grid;
+	column-gap: 16px;
+	row-gap: 16px;
+	grid-template-columns: repeat(auto-fill, 250px);
+	justify-content: center;
 }
 
 .book {
-    width: 250px;
-    height: 300px;
-    padding-top: 10px;
-    background-color: var(--foreground);
-    border: 2px solid var(--accent)
+	width: 250px;
+	height: 300px;
+	padding-top: 10px;
+	background-color: var(--foreground);
+	border: 2px solid var(--accent);
 }
 
 .book * {
-    text-align: center;
+	text-align: center;
 }
 
 .inline {
-    display: flex;
-    justify-content: space-evenly;
-    margin-bottom: 15px;
+	display: flex;
+	justify-content: space-evenly;
+	margin-bottom: 15px;
 }
 
 .inline * {
-    margin: 0
-    !important;
+	margin: 0 !important;
 }
 
 .book button {
-    width: 100px;
-    height: 25px;
-    background-color: var(--accent);
-    color: var(--complementary);
-    border: 2px solid var(--complementary);
+	width: 100px;
+	height: 25px;
+	background-color: var(--accent);
+	color: var(--complementary);
+	border: 2px solid var(--complementary);
 }
 
 /* Form styling */
-.inputForm{
-    width: 250px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.inputForm {
+	width: 250px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 
-    background-color: var(--accent);
-    color: var(--complementary);
+	background-color: var(--accent);
+	color: var(--complementary);
 
-    padding-bottom: 20px;
+	padding-bottom: 20px;
 }
 
-.inputForm *{
-    text-align: center;
-    margin: 10px;
+.inputForm * {
+	text-align: center;
+	margin: 10px;
 }
 
 .inputForm input {
-    display: block;
-    margin: auto;
+	display: block;
+	margin: auto;
 }
 
 .inputForm button {
-    display: block;
-    margin: auto;
+	display: block;
+	margin: auto;
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 
 #closeButton {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    
-    border: none;
-    background-color: var(--complementary);
+	position: absolute;
+	top: 4px;
+	right: 4px;
+
+	border: none;
+	background-color: var(--complementary);
 }
 
 @media screen and (min-width: 500px) {
-    .topbar button {
-        font-size: 20px;
-    }
+	.topbar button {
+		font-size: 20px;
+	}
 }
 
 @media screen and (max-width: 365px) {
-    .topbar button {
-        font-size: 10px;
-    }
+	.topbar button {
+		font-size: 10px;
+	}
 }

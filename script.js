@@ -1,5 +1,7 @@
 //Declaring user library
-let myLibrary = []
+let myLibrary = [];
+let storageType = '';
+let isModified = 'no';
 
 /* FIREBASE AUTHENTICATION */
 const auth = firebase.auth();
@@ -7,41 +9,19 @@ const auth = firebase.auth();
 //Query selectors
 const signInBtn = document.getElementById('signInBtn');
 const signOutBtn = document.getElementById('signOutBtn');
+const localStorageBtn = document.getElementById('localStorageBtn');
+const cloudStorageBtn = document.getElementById('cloudStorageBtn');
+const chooseStoragePopup = document.querySelector('.popup');
+const changeStorageBtn = document.querySelector('#changeStorageBtn');
+
+const booksList = document.querySelector('.booksList');
+const form = document.querySelector('.inputForm');
+const title = document.querySelector('#bookTitle');
+const author = document.querySelector('#bookAuthor');
+const pages = document.querySelector('#numberOfPages');
+const read = document.querySelector('#isRead');
 
 const provider = new firebase.auth.GoogleAuthProvider();
-
-// Sign in event handlers
-signInBtn.onclick = () => auth.signInWithPopup(provider);
-signOutBtn.onclick = () => auth.signOut();
-
-auth.onAuthStateChanged(user => {
-    if (user) {
-        // signed in
-        signInBtn.hidden = true;
-        signOutBtn.hidden = false;
-		myLibrary = [];
-		setTimeout(getFromFirestore(), 5000);
-    } else {
-        // not signed in
-        signInBtn.hidden = false;
-        signOutBtn.hidden = true;
-		myLibrary = [];
-		setLibrary();
-		printAllBooks();
-    }
-});
-
-
-
-//Template for book
-/* commented out as i used class
-function book(title, author, pages, read) {
-	this.title = title;
-	this.author = author;
-	this.pages = pages;
-	this.read = read;
-}
-*/
 
 class book {
 	constructor(title, author, pages, read) {
@@ -52,16 +32,61 @@ class book {
 	}
 }
 
+function chooseStorage() {
+	storageType = '';
+	myLibrary = [];
+	printAllBooks();
+	chooseStoragePopup.classList.remove('hidden');
+	changeStorageBtn.classList.add('hidden');
+	auth.signOut();
+}
+
+function setLocalStorage() {
+	storageType = 'local';
+	chooseStoragePopup.classList.add('hidden');
+	changeStorageBtn.classList.remove('hidden');
+	setLibrary();
+	printAllBooks();
+}
+
+// Logging with cloud
+function setCloudStorage() {
+	auth.signInWithPopup(provider);
+}
+
+// Check if login was successful
+auth.onAuthStateChanged(user => {
+	if (user) {
+		// signed in
+		myLibrary = [];
+		storageType = 'cloud';
+		chooseStoragePopup.classList.add('hidden');
+		changeStorageBtn.classList.remove('hidden');
+		setTimeout(getFromFirestore(), 5000);
+	}
+	// else {
+	// 	// not signed in
+	// 	console.log('Logging in unsuccessful');
+	// 	chooseStorage();
+	// }
+});
+
+changeStorageBtn.addEventListener('click', chooseStorage);
+localStorageBtn.addEventListener('click', setLocalStorage);
+cloudStorageBtn.addEventListener('click', setCloudStorage);
+
 function newBook() {
 	//If the book is being modified, change values of modified book
-	if(isModified!="no") {
+	if (isModified != 'no') {
 		myLibrary[isModified].title = title.value;
 		myLibrary[isModified].author = author.value;
 		myLibrary[isModified].pages = pages.value;
 		myLibrary[isModified].read = read.checked;
 	} else {
 		//else, just create new book
-		myLibrary.push(new book(title.value,author.value,pages.value,read.checked));
+		myLibrary.push(
+			new book(title.value, author.value, pages.value, read.checked)
+		);
 	}
 
 	//After creating new book, print all books, and close form
@@ -85,21 +110,27 @@ function printBook(book) {
 	title.textContent = book.title;
 	author.textContent = `by ${book.author}`;
 	pages.textContent = `Pages: ${book.pages}`;
-	
+
 	//Is book read text and button
 	read.classList.add('inline');
-	read.innerHTML = "<p>Has been read?</p>";
-	if(book.read){
-		readButton.textContent="Yes";
-	} else readButton.textContent="No";
+	read.innerHTML = '<p>Has been read?</p>';
+	if (book.read) {
+		readButton.textContent = 'Yes';
+	} else readButton.textContent = 'No';
 	readButton.id = myLibrary.indexOf(book);
 	//Clicking read button will change
-	readButton.onclick = function() { changeStatus(this); };
+	readButton.onclick = function () {
+		changeStatus(this);
+	};
 	read.appendChild(readButton);
 
 	//Modify and Delete buttons
 	buttons.classList.add('inline');
-	buttons.innerHTML = `<button id="${myLibrary.indexOf(book)}" onclick="modifyBook(this)">Modify</button><button id="${myLibrary.indexOf(book)}" onclick="deleteBook(this)">Delete</button>`
+	buttons.innerHTML = `<button id="${myLibrary.indexOf(
+		book
+	)}" onclick="modifyBook(this)">Modify</button><button id="${myLibrary.indexOf(
+		book
+	)}" onclick="deleteBook(this)">Delete</button>`;
 
 	//Appending everything
 	bookDiv.appendChild(title);
@@ -114,7 +145,7 @@ function printBook(book) {
 
 function printAllBooks() {
 	//Clear current booklist
-	booksList.innerHTML = "";
+	booksList.innerHTML = '';
 
 	//Print every book that is in myLibrary
 	myLibrary.forEach(book => {
@@ -127,33 +158,33 @@ function printAllBooks() {
 
 function closeForm() {
 	//Hide form
-	form.classList.add("hidden");
-	isModified = "no";
+	form.classList.add('hidden');
+	isModified = 'no';
 }
 
 function openForm() {
 	//Show form
-	form.classList.remove("hidden");
+	form.classList.remove('hidden');
 
 	//If the book is modified, show book info inside input fields
-	if(isModified!="no") {
+	if (isModified != 'no') {
 		title.value = myLibrary[isModified].title;
 		author.value = myLibrary[isModified].author;
 		pages.value = myLibrary[isModified].pages;
 		read.checked = myLibrary[isModified].read;
 	} else {
 		//Else, show empty fields
-		title.value = "";
-		author.value = "";
-		pages.value = "";
+		title.value = '';
+		author.value = '';
+		pages.value = '';
 		read.checked = false;
 	}
 }
 
 function changeStatus(btn) {
 	//After clicking read button, change book status
-	if (myLibrary[btn.id].read==true) myLibrary[btn.id].read = false;
-	else if (myLibrary[btn.id].read==false) myLibrary[btn.id].read = true;
+	if (myLibrary[btn.id].read == true) myLibrary[btn.id].read = false;
+	else if (myLibrary[btn.id].read == false) myLibrary[btn.id].read = true;
 
 	//Reprint all books, so the book shows updated status
 	printAllBooks();
@@ -171,32 +202,32 @@ function modifyBook(btn) {
 	openForm();
 }
 
+// function populateStorage() {
+// 	//If the user is using cloud storage, add data to firestore
+// 	if (signInBtn.hidden) {
+// 		addToFirestore();
+// 	} else if (signOutBtn.hidden) {
+// 		//Else, add data to local storage
+// 		localStorage.setItem('library', JSON.stringify(myLibrary));
+// 	}
+// }
+
 function populateStorage() {
 	//If the user is using cloud storage, add data to firestore
-	if(signInBtn.hidden) {
-		addToFirestore();
-	} else if(signOutBtn.hidden) {
-		//Else, add data to local storage
+	if (storageType === 'local') {
 		localStorage.setItem('library', JSON.stringify(myLibrary));
+	} else if (storageType === 'cloud') {
+		addToFirestore();
 	}
 }
 
 //Get data from local storage, and set it to myLibrary
 function setLibrary() {
 	myLibrary = JSON.parse(localStorage.getItem('library'));
+	if (myLibrary == null) {
+		myLibrary = [];
+	}
 }
-
-//Query selectors
-const booksList = document.querySelector('.booksList');
-const form = document.querySelector('.inputForm');
-
-const title = document.querySelector('#bookTitle');
-const author = document.querySelector('#bookAuthor');
-const pages = document.querySelector('#numberOfPages');
-const read = document.querySelector('#isRead');
-
-//Global variables
-let isModified = "no";
 
 /*  !!!!!!!!!!!!!FIRESTORE DATABASE!!!!!!!!!!!!!!!!! */
 const db = firebase.firestore();
@@ -207,23 +238,26 @@ function addToFirestore() {
 	auth.onAuthStateChanged(user => {
 		//Removing length (for some reasons it wouldn't be set to 0 when no books are in myLibrary)
 		libraryRef.doc(user.uid).update({
-			length: firebase.firestore.FieldValue.delete()
+			length: firebase.firestore.FieldValue.delete(),
 		});
 
 		//Set the same document for each book
-		myLibrary.forEach((book) => {
+		myLibrary.forEach(book => {
 			//Converting object into array
 			let arrayBook = Object.values(book);
 
 			//Set document for each user
-			libraryRef.doc(user.uid).set({
-				uid: user.uid,
-				length: myLibrary.length,
-				//Add current book to document
-				[`book${myLibrary.indexOf(book)}`]: arrayBook,
-				
-				//Merge info, so you can add books to database
-			}, { merge:true });
+			libraryRef.doc(user.uid).set(
+				{
+					uid: user.uid,
+					length: myLibrary.length,
+					//Add current book to document
+					[`book${myLibrary.indexOf(book)}`]: arrayBook,
+
+					//Merge info, so you can add books to database
+				},
+				{ merge: true }
+			);
 		});
 	});
 }
@@ -232,31 +266,34 @@ function getFromFirestore() {
 	//Checking if user is logged in
 	auth.onAuthStateChanged(user => {
 		//Get user's document
-		libraryRef.doc(user.uid).get().then((doc) => {
-			//Need to make sure the doc exists
-			if(doc.exists) {
-				//Clearing current library
-				myLibrary = [];
-				//Get number of books in the document
-				let length = doc.data().length;
-				//For each book in the document
-				for(i=0; i<length; i++) {	
-					//Get that book array
-					let oldBook = doc.data()[`book${i}`];
-					//Create new book object
-					let newBook = {};
+		libraryRef
+			.doc(user.uid)
+			.get()
+			.then(doc => {
+				//Need to make sure the doc exists
+				if (doc.exists) {
+					//Clearing current library
+					myLibrary = [];
+					//Get number of books in the document
+					let length = doc.data().length;
+					//For each book in the document
+					for (i = 0; i < length; i++) {
+						//Get that book array
+						let oldBook = doc.data()[`book${i}`];
+						//Create new book object
+						let newBook = {};
 
-					//Set newBook obj values to oldBook values
-					newBook.title = oldBook[0];
-					newBook.author = oldBook[1];
-					newBook.pages = oldBook[2];
-					newBook.read = oldBook[3];
-					//Push new book to myLibrary
-					myLibrary.push(newBook);
+						//Set newBook obj values to oldBook values
+						newBook.title = oldBook[0];
+						newBook.author = oldBook[1];
+						newBook.pages = oldBook[2];
+						newBook.read = oldBook[3];
+						//Push new book to myLibrary
+						myLibrary.push(newBook);
+					}
+					//After getting library from firestore, print it
+					setTimeout(printAllBooks(), 5000);
 				}
-				//After getting library from firestore, print it
-				setTimeout(printAllBooks(), 5000);
-			}
-		});
+			});
 	});
 }

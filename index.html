@@ -16,10 +16,13 @@
 			<h1>Library</h1>
 			<div class="wrapper">
 				<button class="btn" onclick="openForm()">Add a Book</button>
-				<!-- <button class="btn" id="signInBtn">Sign in with Google</button>
-				<button class="btn" id="signOutBtn" hidden="true">
-					Sign Out
-				</button> -->
+				<!-- <button class="btn" id="signInBtn">Sign in with Google</button> -->
+				<!-- <button class="btn" id="signOutBtn" hidden="true"> -->
+				<!-- Sign Out -->
+				<!-- </button> -->
+				<button class="btn hidden" id="changeStorageBtn">
+					Change Storage
+				</button>
 			</div>
 		</div>
 		<div class="booksList"></div>
@@ -40,9 +43,9 @@
 		</div>
 
 		<!-- Popup for storage type -->
-		<div class="popup visible">
+		<div class="popup">
 			<h2 class="popup-title">Choose your storage type</h2>
-			<a class="btn--popup" href="#">
+			<a class="btn--popup" id="localStorageBtn" href="#">
 				<div class="btn--popup-title">
 					<ion-icon
 						name="folder-open-outline"
@@ -55,7 +58,7 @@
 					only on this device and on this browser.
 				</p>
 			</a>
-			<a class="btn--popup" href="#">
+			<a class="btn--popup" id="cloudStorageBtn" href="#">
 				<div class="btn--popup-title">
 					<ion-icon
 						name="cloud-upload-outline"

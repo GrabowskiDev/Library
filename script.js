@@ -51,7 +51,20 @@ function setLocalStorage() {
 
 // Logging with cloud
 function setCloudStorage() {
-	auth.signInWithPopup(provider);
+	auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+		.then(() => {
+			// Existing and future Auth states are now persisted in the current
+			// session only. Closing the window would clear any existing state even
+			// if a user forgets to sign out.
+			// ...
+			// New sign-in will be persisted with session persistence.
+			return auth.signInWithPopup(provider);
+		})
+		.catch(error => {
+			// Handle Errors here.
+			var errorCode = error.code;
+			var errorMessage = error.message;
+		});
 }
 
 // Check if login was successful
@@ -64,11 +77,6 @@ auth.onAuthStateChanged(user => {
 		changeStorageBtn.classList.remove('hidden');
 		setTimeout(getFromFirestore(), 5000);
 	}
-	// else {
-	// 	// not signed in
-	// 	console.log('Logging in unsuccessful');
-	// 	chooseStorage();
-	// }
 });
 
 changeStorageBtn.addEventListener('click', chooseStorage);
@@ -91,6 +99,7 @@ function newBook() {
 
 	//After creating new book, print all books, and close form
 	printAllBooks();
+	populateStorage();
 	closeForm();
 }
 
@@ -151,9 +160,6 @@ function printAllBooks() {
 	myLibrary.forEach(book => {
 		printBook(book);
 	});
-
-	//After printing all books, add them to storage
-	populateStorage();
 }
 
 function closeForm() {
@@ -188,12 +194,14 @@ function changeStatus(btn) {
 
 	//Reprint all books, so the book shows updated status
 	printAllBooks();
+	populateStorage();
 }
 
 function deleteBook(btn) {
 	//Remove book from library
 	myLibrary.splice(btn.id, 1);
 	printAllBooks();
+	populateStorage();
 }
 
 function modifyBook(btn) {
@@ -236,11 +244,11 @@ let libraryRef = db.collection('Libraries');
 function addToFirestore() {
 	//Checking if user is logged in
 	auth.onAuthStateChanged(user => {
-		//Removing length (for some reasons it wouldn't be set to 0 when no books are in myLibrary)
-		libraryRef.doc(user.uid).update({
-			length: firebase.firestore.FieldValue.delete(),
-		});
-
+		if (myLibrary.length == 0) {
+			libraryRef.doc(user.uid).update({
+				length: 0,
+			});
+		}
 		//Set the same document for each book
 		myLibrary.forEach(book => {
 			//Converting object into array

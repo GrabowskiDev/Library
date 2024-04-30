@@ -128,7 +128,7 @@ body {
 
 .book button {
 	width: 100px;
-	height: 48px;
+	height: 40px;
 	background-color: var(--accent);
 	color: var(--complementary);
 	border: 2px solid var(--complementary);
@@ -186,5 +186,58 @@ body {
 @media screen and (max-width: 365px) {
 	.topbar button {
 		font-size: 10px;
+	}
+}
+
+/* ADD MEDIA QUERY FOR 1100 width (change books to center) */
+@media screen and (max-width: 1100px) {
+	.booksList {
+		justify-content: center;
+	}
+}
+
+@media screen and (max-width: 820px) {
+	body {
+		font-size: 16px;
+	}
+
+	.booksList {
+		grid-template-columns: repeat(auto-fill, 200px);
+	}
+
+	.book {
+		height: 240px;
+		width: 200px;
+	}
+
+	.book * {
+		margin: 8px;
+	}
+
+	.book button {
+		width: 80px;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.booksList {
+		grid-template-columns: repeat(auto-fill, 150px);
+	}
+
+	.book {
+		height: 220px;
+		width: 150px;
+	}
+	.book button {
+		width: 60px;
+	}
+
+	.inline {
+		margin: 4px;
+	}
+
+	h2 {
+		font-size: 18px;
+		text-wrap: pretty;
 	}
 }
